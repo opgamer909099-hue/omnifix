@@ -1,5 +1,7 @@
 # OmniFix — One Lens, Every Solution
 
+**Live L1 Prototype:** [https://opgamer909099-hue.github.io/omnifix/](https://opgamer909099-hue.github.io/omnifix/)
+
 **OmniFix** is an AI-powered daily problem-solver built to remove everyday friction across three core areas of life: **money (scams & overpricing), physical objects (repairs & mechanics), and digital devices (PC & mobile troubleshooting).**
 
 ---
