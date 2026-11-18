@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OmniFix — One Lens, Every Solution</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; }
+    .container { max-width: 720px; width: 100%; }
+    header { text-align: center; margin-bottom: 2rem; }
+    header h1 { font-size: 2.2rem; color: #38bdf8; letter-spacing: -0.5px; }
+    header p { color: #94a3b8; margin-top: 0.4rem; font-size: 1rem; }
+    .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+    .tab-btn { background: #1e293b; border: 1px solid #334155; color: #cbd5e1; padding: 1rem 0.75rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.2s; text-align: center; }
+    .tab-btn.active, .tab-btn:hover { background: #0284c7; border-color: #38bdf8; color: #fff; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 1.5rem; }
+    .card h2 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #f1f5f9; }
+    .card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.5; }
+    .input-box { border: 2px dashed #475569; border-radius: 12px; padding: 1.5rem; text-align: center; margin-bottom: 1rem; background: #0f172a; }
+    input[type="text"] { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; margin-top: 0.5rem; }
+    .action-btn { width: 100%; padding: 0.85rem; border: none; border-radius: 10px; background: #38bdf8; color: #0f172a; font-weight: 700; font-size: 1rem; cursor: pointer; }
+    .action-btn:hover { background: #7dd3fc; }
+    .preview-box { margin-top: 1.25rem; padding: 1rem; border-radius: 10px; background: #0f172a; border-left: 4px solid #22c55e; display: none; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; background: #166534; color: #bbf7d0; margin-bottom: 0.5rem; }
+    footer { margin-top: 2.5rem; text-align: center; font-size: 0.85rem; color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>OmniFix</h1>
+      <p>One Lens, Every Solution — Price X-Ray, Physical Repair & Safe Tech Doctor</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchMode('buy', this)">1. Buy Safe</button>
+      <button class="tab-btn" onclick="switchMode('fix', this)">2. Fix Item</button>
+      <button class="tab-btn" onclick="switchMode('tech', this)">3. Fix Device</button>
+    </div>
+
+    <div class="card" id="panel">
+      <h2 id="title">Scan & Buy Safe (Price & Scam X-Ray)</h2>
+      <p id="desc">Upload a product/bill photo to check fair market price ranges, or paste a link to detect website scams before paying.</p>
+      
+      <div class="input-box">
+        <span id="prompt-label">Paste suspicious URL or enter product name (L1 Prototype Preview):</span>
+        <input type="text" id="userInput" placeholder="e.g., https://example-offer-site.xyz or Boat Rockerz 255 wire" />
+      </div>
+
+      <button class="action-btn" onclick="runDemo()">Simulate OmniFix Analysis</button>
+
+      <div class="preview-box" id="result">
+        <span class="badge">L1 PROTOTYPE OUTPUT</span>
+        <p id="result-text" style="color:#e2e8f0; margin:0;"></p>
+      </div>
+    </div>
+
+    <footer>
+      AI Genesis Challenge — Level 1 Architecture & UI Prototype | Zero-Trust Safety Enabled
+    </footer>
+  </div>
+
+  <script>
+    let currentMode = 'buy';
+    const modes = {
+      buy: {
+        title: 'Scan & Buy Safe (Price & Scam X-Ray)',
+        desc: 'Upload a product/bill photo to check fair market price ranges, or paste a link to detect website scams before paying.',
+        label: 'Paste suspicious URL or enter product name:',
+        placeholder: 'e.g., https://unknown-shop.xyz or 12V LED Adapter'
+      },
+      fix: {
+        title: 'Scan & Fix Physical (Visual Repair Guide)',
+        desc: 'Snap a broken headphone wire, loose furniture joint, or appliance to get beginner-friendly step-by-step repair instructions.',
+        label: 'Describe broken item (Camera Vision in L2):',
+        placeholder: 'e.g., 3.5mm headphone jack wire snapped near plug'
+      },
+      tech: {
+        title: 'Auto-Fix Digital (Permission-Based PC & Mobile Doctor)',
+        desc: 'Diagnose PC/mobile issues via screenshot or grant one-time permission for safe automated fixes (DNS reset, cache cleanup).',
+        label: 'Describe PC/Mobile error:',
+        placeholder: 'e.g., Windows Wi-Fi connected but no internet access'
+      }
+    };
+
+    function switchMode(mode, btn) {
+      currentMode = mode;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('title').innerText = modes[mode].title;
+      document.getElementById('desc').innerText = modes[mode].desc;
+      document.getElementById('prompt-label').innerText = modes[mode].label;
+      document.getElementById('userInput').placeholder = modes[mode].placeholder;
+      document.getElementById('result').style.display = 'none';
+    }
+
+    function runDemo() {
+      const val = document.getElementById('userInput').value.trim() || 'Sample Input';
+      const resBox = document.getElementById('result');
+      const resText = document.getElementById('result-text');
+      resBox.style.display = 'block';
+
+      if (currentMode === 'buy') {
+        resText.innerText = `Analyzed "${val}": Fair Market Price Range estimated at ₹350–₹420. Domain & SSL check ready for L2 API integration.`;
+      } else if (currentMode === 'fix') {
+        resText.innerText = `Diagnosed "${val}": Safety Check PASSED (Low Voltage). 3-step repair guide + matched tutorial timestamp ready for L2 Vision integration.`;
+      } else {
+        resText.innerText = `Issue "${val}": Safe diagnostic script prepared (Flush DNS & Renew IP). Waiting for explicit one-time user permission (L3 Agent).`;
+      }
+    }
+  </script>
+</body>
+</html>
